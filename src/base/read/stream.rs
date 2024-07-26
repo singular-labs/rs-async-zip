@@ -144,6 +144,11 @@ where
         &mut self.0 .0
     }
 
+    /// Returns an immutable reference to the inner entry reader.
+    pub fn into_reader(self) -> ZipEntryReader<'a, R, E> {
+        self.0 .0
+    }
+
     /// Converts the reader back into the Ready state if EOF has been reached.
     pub async fn done(mut self) -> Result<ZipFileReader<Ready<R>>> {
         if self.0 .0.read(&mut [0; 1]).await? != 0 {
